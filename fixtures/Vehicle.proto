@@ -126,11 +126,11 @@ message Vehicle {
     Stats stats = 3;
   }
 
-  int32 id          = 1; /** Unique vehicle ID. */
-  Model model       = 2; /** Vehicle model. */
-  string reg_number = 3 [(com.pseudomuto.protokit.v1.extend_field) = true]; /** Vehicle registration number. */
-  sint32 mileage    = 4; /** Current vehicle mileage, if known. */
-  Category category = 5; /** Vehicle category. */
+  int32 id          = 1 [json_name = "ID"]; /** Unique vehicle ID. */
+  Model model       = 2 [json_name = "Model"]; /** Vehicle model. */
+  string reg_number = 3 [json_name = "RegNumber", (com.pseudomuto.protokit.v1.extend_field) = true]; /** Vehicle registration number. */
+  sint32 mileage    = 4 [json_name = "Mileage"]; /** Current vehicle mileage, if known. */
+  Category category = 5 [json_name = "Category"]; /** Vehicle category. */
   Engine engine     = 9; /** Vehicle engine. */
 
 
@@ -141,9 +141,9 @@ message Vehicle {
 
 
   // rates
-  repeated sint32 rates = 6;
+  repeated sint32 rates = 6 [json_name = "Rates"];
 
-  map<string, string> properties = 7; // bag of properties related to the vehicle.
+  map<string, string> properties = 7 [json_name = "Properties"]; // bag of properties related to the vehicle.
 
   oneof travel {
 	int32 kilometers = 8;

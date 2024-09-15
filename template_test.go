@@ -274,6 +274,7 @@ func TestFieldProperties(t *testing.T) {
 	require.Equal(t, "com.example.Vehicle.Category", field.FullType)
 	require.Empty(t, field.DefaultValue)
 	require.False(t, field.IsOneof)
+	require.Equal(t, "Category", field.JsonName)
 
 	field = findField("properties", findMessage("Vehicle", vehicleFile))
 	require.Equal(t, "properties", field.Name)
@@ -284,6 +285,7 @@ func TestFieldProperties(t *testing.T) {
 	require.Empty(t, field.DefaultValue)
 	require.True(t, field.IsMap)
 	require.False(t, field.IsOneof)
+	require.Equal(t, "Properties", field.JsonName)
 
 	field = findField("rates", findMessage("Vehicle", vehicleFile))
 	require.Equal(t, "rates", field.Name)
@@ -293,6 +295,7 @@ func TestFieldProperties(t *testing.T) {
 	require.Equal(t, "sint32", field.FullType)
 	require.False(t, field.IsMap)
 	require.False(t, field.IsOneof)
+	require.Equal(t, "Rates", field.JsonName)
 
 	field = findField("kilometers", findMessage("Vehicle", vehicleFile))
 	require.Equal(t, "kilometers", field.Name)

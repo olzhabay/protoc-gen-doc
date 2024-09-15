@@ -38,10 +38,10 @@
 {{.Description}}
 
 {{if .HasFields}}
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
+| Json Name | Field | Type | Required | Default Value | Notes |
+| --------- | ----- | ---- | -------- | ------------- | ----- |
 {{range .Fields -}}
-  | {{.Name}} | [{{.LongType}}](#{{.FullType | anchor}}) | {{.Label}} | {{if (index .Options "deprecated"|default false)}}**Deprecated.** {{end}}{{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
+  | `{{.JsonName}}` | {{.Name}} | [{{.LongType}}](#{{.FullType | anchor}}) | {{if (eq .Label "required")}} true {{else}} false {{end}} | {{if .DefaultValue}}{{.DefaultValue}}{{end}} | {{if (index .Options "deprecated"|default false)}}**Deprecated.** {{end}}{{nobr .Description}} |
 {{end}}
 {{end}}
 

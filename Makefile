@@ -48,7 +48,10 @@ build/examples: bin/protoc build tmp/googleapis examples/proto/*.proto examples/
 ##@: Dev
 
 dev/docker: bin/protoc tmp/googleapis release/snapshot ## Run bash in the docker container
-	@docker run --rm -it --entrypoint /bin/bash pseudomuto/protoc-gen-doc:latest
+	@docker run --rm -it --entrypoint /bin/bash olzhabay/protoc-gen-doc:latest
+
+dev/build-docker:
+	@docker build -t olzhabay/protoc-gen-doc .
 
 ##@: Test
 

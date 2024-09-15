@@ -15,12 +15,12 @@ message Manufacturer {
     CATEGORY_EXTERNAL = 1; /** The manufacturer is external. */
   }
 
-  required int32 id       = 1; /** The unique manufacturer ID. */
-  required string code    = 2; /** A manufacturer code, e.g. "DKL4P". */
-  optional string details = 3; /** Manufacturer details (minimum orders et.c.). */
+  required int32 id       = 1 [json_name = "ID"]; /** The unique manufacturer ID. */
+  required string code    = 2 [json_name = "Code"]; /** A manufacturer code, e.g. "DKL4P". */
+  optional string details = 3 [json_name = "Details"]; /** Manufacturer details (minimum orders et.c.). */
 
   /** Manufacturer category. */
-  optional Category category = 4 [default = CATEGORY_EXTERNAL];
+  optional Category category = 4 [json_name = "Category", default = CATEGORY_EXTERNAL];
 
   extensions 100 to max;
 }
@@ -58,11 +58,11 @@ message Vehicle {
     required string description = 2; /// Category name. E.g. "Sedan".
   }
 
-  required int32 id          = 1; /** Unique vehicle ID. */
-  required Model model       = 2; /** Vehicle model. */
-  required string reg_number = 3; /** Vehicle registration number. */
-  optional sint32 mileage    = 4; /** Current vehicle mileage, if known. */
-  optional Category category = 5; /** Vehicle category. */
+  required int32 id          = 1 [json_name = "ID"]; /** Unique vehicle ID. */
+  required Model model       = 2 [json_name = "Model"]; /** Vehicle model. */
+  required string reg_number = 3 [json_name = "RegNumber"]; /** Vehicle registration number. */
+  optional sint32 mileage    = 4 [json_name = "Mileage"]; /** Current vehicle mileage, if known. */
+  optional Category category = 5 [json_name = "Category"]; /** Vehicle category. */
 
   // Doc comments for fields can come before or
   // after the field definition. And just like
@@ -72,12 +72,12 @@ message Vehicle {
   /**
    * Dollars per day.
    */
-  optional sint32 daily_hire_rate_dollars = 6 [default = 50];
+  optional sint32 daily_hire_rate_dollars = 6 [json_name = "DailyHireRateDollars", default = 50];
 
   /**
    * Cents per day.
    */
-  optional sint32 daily_hire_rate_cents = 7;
+  optional sint32 daily_hire_rate_cents = 7 [json_name = "DailyHireRateCents"];
 
   // Nested extensions can also be documented:
 

@@ -51,7 +51,10 @@ func NewTemplate(descs []*protokit.FileDescriptor) *Template {
 		// Recursively add nested types from messages
 		var addFromMessage func(*protokit.Descriptor)
 		addFromMessage = func(m *protokit.Descriptor) {
-			file.Messages = append(file.Messages, parseMessage(m))
+			msg := parseMessage(m)
+			if !msg.Empty {
+				file.Messages = append(file.Messages, msg)
+			}
 			for _, e := range m.Enums {
 				file.Enums = append(file.Enums, parseEnum(e))
 			}
@@ -180,6 +183,8 @@ type Message struct {
 	Fields     []*MessageField     `json:"fields"`
 
 	Options map[string]interface{} `json:"options,omitempty"`
+
+	Empty bool `json:"empty"`
 }
 
 // Option returns the named option.
@@ -234,6 +239,7 @@ type MessageField struct {
 	IsOneof      bool   `json:"isoneof"`
 	OneofDecl    string `json:"oneofdecl"`
 	DefaultValue string `json:"defaultValue"`
+	JsonName     string `json:"json_name"`
 
 	Options map[string]interface{} `json:"options,omitempty"`
 }
@@ -447,6 +453,7 @@ func parseMessage(pm *protokit.Descriptor) *Message {
 		Extensions:    make([]*MessageExtension, 0, len(pm.Extensions)),
 		Fields:        make([]*MessageField, 0, len(pm.Fields)),
 		Options:       mergeOptions(extractOptions(pm.GetOptions()), extensions.Transform(pm.OptionExtensions)),
+		Empty:         (len(pm.GetExtensions()) + len(pm.GetMessageFields()) + len(pm.GetOneofDecl())) == 0,
 	}
 
 	for _, ext := range pm.Extensions {
@@ -482,6 +489,7 @@ func parseMessageField(pf *protokit.FieldDescriptor, oneofDecls []*descriptor.On
 		DefaultValue: pf.GetDefaultValue(),
 		Options:      mergeOptions(extractOptions(pf.GetOptions()), extensions.Transform(pf.OptionExtensions)),
 		IsOneof:      pf.OneofIndex != nil,
+		JsonName:     pf.GetJsonName(),
 	}
 
 	if m.IsOneof {
